@@ -29,7 +29,7 @@ const ControlPanelContainer = ({ className }) => {
 	const onLogout = () => {
 		dispatch(logout());
 		sessionStorage.removeItem('userData');
-		dispatch(clearCart()); // Очистка корзины
+		dispatch(clearCart());
 	};
 	const isAdmin = checkAccess([ROLE.ADMIN], roleId);
 	const isSalesman = checkAccess([ROLE.SALESMAN], roleId);

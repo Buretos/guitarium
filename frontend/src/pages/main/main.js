@@ -81,6 +81,7 @@ const MainContainer = ({ className }) => {
 
 	const handleCategoryChange = (category) => {
 		setCategoryId(category);
+		setCurrentPage(0); // сброс страницы пагинатора на первую
 	};
 
 	const handlePageChange = (selectedPage) => {

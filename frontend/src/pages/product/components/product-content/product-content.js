@@ -58,6 +58,7 @@ const ProductContentContainer = ({
 export const ProductContent = styled(ProductContentContainer)`
 	& img {
 		float: left;
+		width: 280px;
 		margin: 0 20px 10px 0;
 	}
 
@@ -69,7 +70,6 @@ export const ProductContent = styled(ProductContentContainer)`
 `;
 
 ProductContent.propTypes = {
-	// product: PROP_TYPE.PRODUCT.isRequired,
 	product: PropTypes.shape({
 		id: PropTypes.string.isRequired,
 		title: PropTypes.string.isRequired,
@@ -80,14 +80,6 @@ ProductContent.propTypes = {
 		quanthy: PropTypes.number,
 		price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 		content: PropTypes.string.isRequired,
-		comments: PropTypes.arrayOf(
-			PropTypes.shape({
-				id: PropTypes.string.isRequired,
-				author: PropTypes.string.isRequired,
-				content: PropTypes.string.isRequired,
-				evaluation: PropTypes.number.isRequired,
-				publishedAt: PropTypes.string.isRequired,
-			}),
-		).isRequired,
+		comments: PropTypes.arrayOf(PROP_TYPE.COMMENT).isRequired,
 	}).isRequired,
 };

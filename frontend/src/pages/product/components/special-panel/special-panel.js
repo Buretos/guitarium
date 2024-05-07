@@ -142,8 +142,8 @@ export const SpecialPannel = styled(SpecialPannelContainer)`
 SpecialPannelContainer.propTypes = {
 	id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 	categoryId: PropTypes.number.isRequired,
-	comments: PropTypes.arrayOf(PROP_TYPE.COMMENT), // или детализировать структуру объектов, если она известна
+	comments: PropTypes.arrayOf(PROP_TYPE.COMMENT),
 	quanthy: PropTypes.number,
 	price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	editButton: PropTypes.element.isRequired, // PropTypes.element подразумевает React элемент
+	editButton: PropTypes.element.isRequired,
 };

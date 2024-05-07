@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import { Icon, Input } from '../../../../components';
 import styled from 'styled-components';
 
-// Управляемый ввод из родительского компонента приходит и искомаяя фраза и onChange
 const SearchContainer = ({ className, searchPhrase, onChange }) => {
 	return (
 		<div className={className}>

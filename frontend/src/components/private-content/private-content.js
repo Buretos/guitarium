@@ -16,6 +16,6 @@ export const PrivateContent = ({ children, access, serverError = null }) => {
 
 PrivateContent.propTypes = {
 	children: PropTypes.node.isRequired,
-	access: PropTypes.arrayOf(PROP_TYPE.ROLE).isRequired, // одно из значений массива экспортируемой константы PROP_TYPE.ROLE (см. выше)
+	access: PropTypes.arrayOf(PROP_TYPE.ROLE).isRequired,
 	serverError: PROP_TYPE.ERROR,
 };

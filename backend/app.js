@@ -15,13 +15,8 @@ app.use(express.json());
 
 app.use('/', routes);
 
-mongoose
-	.connect(
-		process.env.DB_CONNECTION_STRING,
-		// 'mongodb+srv://morozcuporos:121354As@cluster0.d8xe1od.mongodb.net/gitarium?retryWrites=true&w=majority&appName=Cluster0',
-	)
-	.then(() => {
-		app.listen(port, () => {
-			console.log(`Server started on port ${port}`);
-		});
+mongoose.connect(process.env.DB_CONNECTION_STRING).then(() => {
+	app.listen(port, () => {
+		console.log(`Server started on port ${port}`);
 	});
+});

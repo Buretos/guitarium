@@ -141,14 +141,6 @@ export const Comments = styled(CommentsContainer)`
 `;
 
 Comments.propTypes = {
-	comments: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.string.isRequired,
-			author: PropTypes.string.isRequired,
-			content: PropTypes.string.isRequired,
-			evaluation: PropTypes.number.isRequired,
-			publishedAt: PropTypes.string.isRequired,
-		}),
-	).isRequired,
+	comments: PropTypes.arrayOf(PROP_TYPE.COMMENT).isRequired,
 	productId: PropTypes.string.isRequired,
 };

@@ -117,6 +117,7 @@ export const ProductCard = styled(ProductCardContainer)`
 
 	& img {
 		display: block;
+		height: 360px;
 		width: 100%;
 	}
 
@@ -183,8 +184,8 @@ ProductCard.propTypes = {
 	model: PropTypes.string.isRequired,
 	quanthy: PropTypes.number.isRequired,
 	price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-	// commentsCount: PropTypes.number.isRequired,
-	// commentsRating: PropTypes.number.isRequired,
+	commentsCount: PropTypes.number.isRequired,
+	commentsRating: PropTypes.number.isRequired,
 	cardOnly: PropTypes.bool,
 	onClick: PropTypes.func,
 };

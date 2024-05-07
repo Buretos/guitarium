@@ -68,7 +68,6 @@ router.get('/:userId', authenticated, async (req, res) => {
 });
 
 router.get('/login/:login', authenticated, async (req, res) => {
-	// Изменили путь и параметр
 	const { login } = req.params;
 	try {
 		const orders = await getOrdersByUserLogin(login);
