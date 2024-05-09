@@ -28,7 +28,7 @@ const ModalContainer = ({ className }) => {
 						Да
 					</Button>
 					<Button width="120px" onClick={onCancel}>
-						Отмена
+						Нет
 					</Button>
 				</div>
 			</div>

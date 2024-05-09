@@ -2,7 +2,14 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { selectCart, selectUserId, selectUserRole } from '../../selectors';
-import { addOrderAsync, addToCart, clearCart, removeFromCart } from '../../actions';
+import {
+	CLOSE_MODAL,
+	addOrderAsync,
+	addToCart,
+	clearCart,
+	openModal,
+	removeFromCart,
+} from '../../actions';
 import { Button, H2 } from '../../components';
 import { ProductCard } from '../main/components';
 import { checkAccess } from '../../utils';
@@ -37,7 +44,23 @@ const CartContainer = ({ className }) => {
 		dispatch(removeFromCart(productId)); // Удаление одной единицы товара из корзины
 	};
 
-	const handleCreateOrder = (
+	const messageCreatedOrder = () => {
+		dispatch(
+			openModal({
+				text: 'Спасибо! Ваш заказ оформлен. Хотите посмотреть историю ваших заказов?',
+				onConfirm: () => {
+					navigate(`/orders`);
+					dispatch(CLOSE_MODAL);
+				},
+				onCancel: () => {
+					navigate('/');
+					dispatch(CLOSE_MODAL);
+				},
+			}),
+		);
+	};
+
+	const handleCreateOrder = async (
 		userId,
 		{ productsInCart },
 		paymentMethod,
@@ -45,7 +68,7 @@ const CartContainer = ({ className }) => {
 		countAll,
 		totalAmount,
 	) => {
-		dispatch(
+		await dispatch(
 			addOrderAsync(
 				userId,
 				productsInCart,
@@ -56,7 +79,7 @@ const CartContainer = ({ className }) => {
 			),
 		);
 		dispatch(clearCart());
-		navigate(`/orders`);
+		messageCreatedOrder();
 	};
 
 	// Проверяем, все ли условия для активации кнопки "Оформить заказ" выполнены
@@ -106,8 +129,14 @@ const CartContainer = ({ className }) => {
 							/>
 						</div>
 						<div className="product-info">
+							<div className="product-title">
+								<b>{title}</b>
+							</div>
 							<div>
 								Производитель: <b>{manufacturer}</b>
+							</div>
+							<div>
+								Модель: <b>{model}</b>
 							</div>
 							<div>
 								Количество: <b>{count}</b> шт.
@@ -233,6 +262,7 @@ export const Cart = styled(CartContainer)`
 	& .product-bloc {
 		display: flex;
 		justify-content: space-between;
+		padding: 10px 0;
 		border-bottom: 1px solid #ccc;
 	}
 
@@ -250,6 +280,11 @@ export const Cart = styled(CartContainer)`
 		margin: 20px;
 		width: 570px;
 		justify-content: space-between;
+		font-size: 19px;
+	}
+
+	& .product-title {
+		font-size: 22px;
 	}
 
 	& .block-button-cart {

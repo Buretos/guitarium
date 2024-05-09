@@ -1,9 +1,12 @@
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { H2, Icon } from '../../../../components';
+import { Button, H2, Icon } from '../../../../components';
 import { SpecialPannel } from '../special-panel/special-panel';
-import { PROP_TYPE } from '../../../../constants';
+import { PROP_TYPE, ROLE } from '../../../../constants';
 import styled from 'styled-components';
+import { addToCart } from '../../../../actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUserRole } from '../../../../selectors';
 
 const ProductContentContainer = ({
 	className,
@@ -20,7 +23,25 @@ const ProductContentContainer = ({
 		comments,
 	},
 }) => {
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const userRole = useSelector(selectUserRole);
+
+	const product = {
+		id,
+		title,
+		imageUrl,
+		categoryId,
+		manufacturer,
+		model,
+		quanthy,
+		price,
+		content,
+		comments,
+	};
+	const handleAddToCart = (product) => {
+		dispatch(addToCart(product));
+	};
 
 	return (
 		<div className={className}>
@@ -42,7 +63,16 @@ const ProductContentContainer = ({
 					/>
 				}
 			/>
-			<div className="product-info">
+			{userRole !== ROLE.ADMIN && userRole !== ROLE.SALESMAN ? (
+				<div className="product-button">
+					<Button width="62%" onClick={() => handleAddToCart(product)}>
+						Купить
+					</Button>
+				</div>
+			) : (
+				<></>
+			)}
+			<div>
 				<div>
 					Производитель: &nbsp;<strong>{manufacturer}</strong>
 				</div>
@@ -60,6 +90,10 @@ export const ProductContent = styled(ProductContentContainer)`
 		float: left;
 		width: 280px;
 		margin: 0 20px 10px 0;
+	}
+
+	& .product-button {
+		margin: 20px 0;
 	}
 
 	& .product-text {

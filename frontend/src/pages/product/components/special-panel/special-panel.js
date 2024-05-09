@@ -27,7 +27,7 @@ const SpecialPannelContainer = ({
 	const onProductRemove = (id) => {
 		dispatch(
 			openModal({
-				text: 'Удалить статью?',
+				text: 'Удалить этот товар?',
 				onConfirm: () => {
 					dispatch(removeProductAsync(id)).then(() => {
 						navigate('/');

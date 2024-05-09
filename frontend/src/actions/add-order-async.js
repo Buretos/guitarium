@@ -1,5 +1,4 @@
 import { request } from '../utils/request';
-import { setUser } from './set-user';
 
 export const addOrderAsync =
 	(userId, productsInCart, paymentMethod, deliveryMethod, countAll, totalAmount) =>
@@ -11,7 +10,5 @@ export const addOrderAsync =
 			deliveryMethod,
 			countAll,
 			totalAmount,
-		}).then((userData) => {
-			dispatch(setUser(userData.data));
 		});
 	};

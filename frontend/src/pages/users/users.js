@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectUserRole } from '../../selectors';
 import { H2, Loader, PrivateContent } from '../../components';
 import { TableRow, UserRow } from './components';
@@ -7,8 +7,10 @@ import { ROLE } from '../../constants';
 import { checkAccess } from '../../utils/check-access';
 import styled from 'styled-components';
 import { request } from '../../utils/request';
+import { CLOSE_MODAL, openModal } from '../../actions';
 
 const UsersContainer = ({ className }) => {
+	const dispatch = useDispatch();
 	const [users, setUsers] = useState([]);
 	const [roles, setRoles] = useState([]);
 	const [shouIdUpdateUserList, setShouIdUpdateUserList] = useState(false);
@@ -35,15 +37,43 @@ const UsersContainer = ({ className }) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [shouIdUpdateUserList, userRole]);
 
-	const onUserRemove = (userId) => {
-		if (!checkAccess([ROLE.ADMIN], userRole)) {
-			return;
-		}
+	// const onUserRemove = (userId) => {
+	// 	if (!checkAccess([ROLE.ADMIN], userRole)) {
+	// 		return;
+	// 	}
 
-		request(`/users/${userId}`, 'DELETE').then(() => {
-			setShouIdUpdateUserList(!shouIdUpdateUserList); // Инвертируем флаг изменения списка пользователей для рендеринга через useEffect
-		});
+	const onUserRemove = (userId) => {
+		dispatch(
+			openModal({
+				text: 'Удалить этого пользователя?',
+				onConfirm: () => {
+					if (!checkAccess([ROLE.ADMIN], userRole)) {
+						return;
+					}
+					request(`/users/${userId}`, 'DELETE').then(() => {
+						setShouIdUpdateUserList(!shouIdUpdateUserList); // Инвертируем флаг изменения списка пользователей для рендеринга через useEffect
+					});
+					dispatch(CLOSE_MODAL);
+				},
+				onCancel: () => dispatch(CLOSE_MODAL),
+			}),
+		);
 	};
+
+	// 				dispatch(removeProductAsync(id)).then(() => {
+	// 					navigate('/');
+	// 				});
+	// 				dispatch(CLOSE_MODAL);
+	// 			},
+	// 			onCancel: () => dispatch(CLOSE_MODAL),
+	// 		}),
+	// 	);
+	// };
+
+	// 	request(`/users/${userId}`, 'DELETE').then(() => {
+	// 		setShouIdUpdateUserList(!shouIdUpdateUserList); // Инвертируем флаг изменения списка пользователей для рендеринга через useEffect
+	// 	});
+	// };
 
 	return (
 		<PrivateContent access={[ROLE.ADMIN]} serverError={errorMessage}>

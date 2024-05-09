@@ -85,11 +85,6 @@ UserRow.propTypes = {
 	login: PropTypes.string.isRequired,
 	registeredAt: PropTypes.string.isRequired,
 	roleId: PropTypes.number.isRequired,
-	roles: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.number.isRequired,
-			name: PropTypes.string.isRequired,
-		}),
-	).isRequired,
+	roles: PropTypes.arrayOf(PROP_TYPE.ROLE).isRequired,
 	onUserRemove: PropTypes.func.isRequired,
 };
