@@ -75,7 +75,6 @@ const ProductFormContainer = ({
 	const onSave = useCallback(() => {
 		const newContent = sanizeContent(contentRef.current.innerHTML);
 
-		// Мы делаем асинхронный экшен (хотя мы не используем вторую функцию dispatch в этом экшене) для того, чтобы получить промис, который после ответа от сервера позволит нам использовать функцию navigate, чтобы переключиться на страницу статьи.
 		dispatch(
 			saveProductAsync(id, {
 				imageUrl: imageUrlValue,

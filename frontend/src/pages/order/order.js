@@ -119,7 +119,7 @@ const OrderContainer = ({ className }) => {
 				<div className="bloc-select"></div>
 
 				<Button className="button-order" onClick={() => navigate(-1)}>
-					Вернуться назад
+					Вернуться к истории заказов
 				</Button>
 			</div>
 		</div>

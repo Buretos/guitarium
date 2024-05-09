@@ -5,20 +5,16 @@ import storage from 'redux-persist/lib/storage';
 import {
 	appReducer,
 	userReducer,
-	usersReducer,
 	cartReducer,
 	productReducer,
-	productsReducer,
 	categoriesReducer,
 } from './reducers';
 
 const reducer = combineReducers({
 	app: appReducer,
 	user: userReducer,
-	users: usersReducer,
 	cart: cartReducer,
 	product: productReducer,
-	products: productsReducer,
 	categories: categoriesReducer,
 });
 

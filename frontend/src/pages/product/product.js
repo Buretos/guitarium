@@ -28,14 +28,11 @@ const ProductContainer = ({ className }) => {
 			setIsLoading(false);
 			return;
 		}
-		// В строке адреса товара  может существовать id реального товара. И любой знак после "/product" может интерпретироваться как id товара. Поэтому когда придёт ответ после запроса на сервер, нужно проверить есть ли такая статья. Если нет, то нужно выдать ошибку "Такой статьи нет". Стоит посмотреть экшен loadProductAsync.
 		dispatch(loadProductAsync(params.id)).then((productData) => {
-			// Проверяем полученный ответ, записываем ответ по ошибке (текст ошибки.или null) и устанавливаем её в state.
 			setError(productData.error);
 			setIsLoading(false);
 		});
 	}, [dispatch, params.id, isCreating]);
-	// странная история с обновлением категории продукта. Она не обновляется сразу, только после перезагрузки страницы.
 
 	const SpecificProductPage = isLoading ? (
 		<Loader />
@@ -52,7 +49,6 @@ const ProductContainer = ({ className }) => {
 		</div>
 	);
 
-	// Смотрим есть ли ошибка. Если есть, то выдаём её, если нет, то выдаём контент ответа в зависимости от того просматриваем, редактируем или создаём статью товара  (см. выше SpecificProductPage).
 	return error ? <Error error={error} /> : SpecificProductPage;
 };
 
