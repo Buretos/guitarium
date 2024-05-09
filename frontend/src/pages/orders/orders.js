@@ -1,13 +1,12 @@
-import styled from 'styled-components';
 import { H2, Loader, PrivateContent } from '../../components';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { ROLE } from '../../constants';
 import { checkAccess } from '../../utils';
-import { useSelector } from 'react-redux';
+import { FilterBlock, TableRow, OrderRow } from './components';
 import { selectUserId, selectUserLogin, selectUserRole } from '../../selectors';
-import { TableRow } from './components/table-row/table-row';
-import { OrderRow } from './components/order-row/order-row';
 import { request } from '../../utils/request';
+import styled from 'styled-components';
 
 const OrdersContainer = ({ className }) => {
 	const [orders, setOrders] = useState([]);
@@ -15,6 +14,11 @@ const OrdersContainer = ({ className }) => {
 	const [changeStatus, setChangeStatus] = useState([false]);
 	const [errorMessage, setErrorMessage] = useState(null);
 	const [isLoading, setIsLoading] = useState(false);
+
+	const [searchTerm, setSearchTerm] = useState('');
+	const [filteredOrders, setFilteredOrders] = useState([]);
+	const [selectedStatus, setSelectedStatus] = useState('all');
+
 	const userRole = useSelector(selectUserRole);
 	const isClient = checkAccess([ROLE.CLIENT], userRole);
 	const userId = useSelector(selectUserId);
@@ -59,6 +63,32 @@ const OrdersContainer = ({ className }) => {
 	}, [userRole, changeStatus]);
 	const reversedOrders = [...orders].reverse();
 
+	useEffect(() => {
+		// Фильтрация и сортировка заказов
+		let updatedOrders = [...reversedOrders];
+
+		// Фильтрация по id, имени пользователя или дате
+		if (searchTerm) {
+			updatedOrders = updatedOrders.filter(
+				(order) =>
+					order.id.toString().includes(searchTerm) ||
+					order.userId.includes(searchTerm) ||
+					order.createdOrderAt.includes(searchTerm) ||
+					order.totalAmount.toString().includes(searchTerm),
+			);
+		}
+
+		// Фильтрация по статусу
+		if (selectedStatus !== 'all') {
+			updatedOrders = updatedOrders.filter(
+				(order) => order.statusId.toString() === selectedStatus,
+			);
+		}
+
+		setFilteredOrders(updatedOrders);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [orders, searchTerm, selectedStatus]);
+
 	return (
 		<PrivateContent
 			access={[ROLE.CLIENT, ROLE.SALESMAN, ROLE.ADMIN]}
@@ -70,6 +100,12 @@ const OrdersContainer = ({ className }) => {
 				) : (
 					<>
 						<H2>Заказы</H2>
+						<FilterBlock
+							searchTerm={searchTerm}
+							setSearchTerm={setSearchTerm}
+							selectedStatus={selectedStatus}
+							setSelectedStatus={setSelectedStatus}
+						/>
 						<div className="table-bloc">
 							<div>
 								<TableRow>
@@ -80,7 +116,7 @@ const OrdersContainer = ({ className }) => {
 									<div className="status-column">Статус заказа</div>
 								</TableRow>
 							</div>
-							{reversedOrders.map(
+							{filteredOrders.map(
 								({
 									id,
 									userId,

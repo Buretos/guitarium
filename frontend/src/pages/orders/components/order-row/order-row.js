@@ -4,7 +4,6 @@ import { TableRow } from '../table-row/table-row';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { request } from '../../../../utils/request';
-import { formatDateAndTime } from '../../../../utils';
 import styled from 'styled-components';
 
 const OrderRowContainer = ({
@@ -68,7 +67,7 @@ const OrderRowContainer = ({
 			<TableRow border={true}>
 				<div className="id-column">{id}</div>
 				<div className="item1-column">{userLogin}</div>
-				<div className="item2-column">{formatDateAndTime(createdOrderAt)}</div>
+				<div className="item2-column">{createdOrderAt.split('T')[0]}</div>
 				<div className="item1-column">{totalAmount}</div>
 				{isClient ? (
 					<div className="status-client-column">
