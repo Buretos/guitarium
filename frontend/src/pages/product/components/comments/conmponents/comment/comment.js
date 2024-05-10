@@ -71,7 +71,7 @@ const CommentContainer = ({
 							margin="0 10px 0 0"
 							onClick={() => {}}
 						/>
-						{publishedAt}
+						{publishedAt.split('T')[0]}
 					</div>
 				</div>
 				<div className="comment-text">{content}</div>
