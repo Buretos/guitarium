@@ -71,9 +71,9 @@ const MainContainer = ({ className }) => {
 	const [products, setProducts] = useState([]);
 	const [currentPage, setCurrentPage] = useState(0);
 	const [searchPhrase, setSearchPhrase] = useState('');
-	const [shouldSearch, setShouldSearch] = useState(false); // флаг, срабатывающий после истечения 2 секунд задержки в debounce
+	const [shouldSearch, setShouldSearch] = useState(false);
 	const [categoryId, setCategoryId] = useState('');
-	const [sorting, setSorting] = useState('NO'); //priceDESC
+	const [sorting, setSorting] = useState('NO');
 	const [isLoading, setIsLoading] = useState(false);
 	const roleId = useSelector(selectUserRole);
 	const isSalesman = checkAccess([ROLE.SALESMAN], roleId);
@@ -104,19 +104,17 @@ const MainContainer = ({ className }) => {
 	}, [shouldSearch, categoryId]);
 
 	const startDelayedSearch = useMemo(() => debounce(setShouldSearch, 2000), []);
-	// startDelayedSearch спустя 2 секудны поменяет флаг поиска и поиск сработает в useEffect
-	// благодаря useMemo ссылка на startDelayedSearch будет сохранятся между рендерами, она не будет сбрасываться и отработает нормально
 
 	const onSearch = ({ target }) => {
-		setSearchPhrase(target.value); // устанавливаем searchPhrase из значения ввода
-		startDelayedSearch(!shouldSearch); // через 2 секунды инвертируем (меняем) флаг поиска. При этом searchPhrase отправляется в операцию на серевер (см. useEffect)
+		setSearchPhrase(target.value);
+		startDelayedSearch(!shouldSearch);
 	};
 
-	const filteredProducts = categoryId // фильтруем список полученный с сервера и отобранный по поисковой фразе (запрос на json-server с поисковой фразой)
+	const filteredProducts = categoryId
 		? products.filter((product) => product.categoryId.toString() === categoryId)
 		: products;
-	const startIndex = currentPage * PAGINATION_LIMIT; // Здесь PAGINATION_LIMIT = 9 - количество элементов на странице
-	const endIndex = startIndex + PAGINATION_LIMIT; // Здесь PAGINATION_LIMIT = 9 - количество элементов на странице
+	const startIndex = currentPage * PAGINATION_LIMIT;
+	const endIndex = startIndex + PAGINATION_LIMIT;
 	const currentProducts = filteredProducts.slice(startIndex, endIndex);
 
 	const handleSort = (e) => {

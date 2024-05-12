@@ -11,6 +11,10 @@ const OrderSchema = mongoose.Schema(
 		},
 		productsInCart: [
 			{
+				id: {
+					type: String,
+					required: true,
+				},
 				title: {
 					type: String,
 					required: true,

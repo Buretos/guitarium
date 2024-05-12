@@ -25,7 +25,7 @@ const ProductCardContainer = ({
 
 	return (
 		<div className={className}>
-			<Link to={`/product/${id}`}>
+			<Link to={`/products/${id}`}>
 				<img src={imageUrl} alt={title} />
 				<div className="product-card-footer">
 					<h4>{title}</h4>

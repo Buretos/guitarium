@@ -37,11 +37,6 @@ const UsersContainer = ({ className }) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [shouIdUpdateUserList, userRole]);
 
-	// const onUserRemove = (userId) => {
-	// 	if (!checkAccess([ROLE.ADMIN], userRole)) {
-	// 		return;
-	// 	}
-
 	const onUserRemove = (userId) => {
 		dispatch(
 			openModal({
@@ -51,7 +46,7 @@ const UsersContainer = ({ className }) => {
 						return;
 					}
 					request(`/users/${userId}`, 'DELETE').then(() => {
-						setShouIdUpdateUserList(!shouIdUpdateUserList); // Инвертируем флаг изменения списка пользователей для рендеринга через useEffect
+						setShouIdUpdateUserList(!shouIdUpdateUserList);
 					});
 					dispatch(CLOSE_MODAL);
 				},
@@ -59,21 +54,6 @@ const UsersContainer = ({ className }) => {
 			}),
 		);
 	};
-
-	// 				dispatch(removeProductAsync(id)).then(() => {
-	// 					navigate('/');
-	// 				});
-	// 				dispatch(CLOSE_MODAL);
-	// 			},
-	// 			onCancel: () => dispatch(CLOSE_MODAL),
-	// 		}),
-	// 	);
-	// };
-
-	// 	request(`/users/${userId}`, 'DELETE').then(() => {
-	// 		setShouIdUpdateUserList(!shouIdUpdateUserList); // Инвертируем флаг изменения списка пользователей для рендеринга через useEffect
-	// 	});
-	// };
 
 	return (
 		<PrivateContent access={[ROLE.ADMIN]} serverError={errorMessage}>

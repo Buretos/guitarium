@@ -1,10 +1,9 @@
 import { ACTION_TYPE } from '../actions';
-// Initial state
+
 const initialCartState = {
 	productsInCart: [],
 };
 
-// Reducer
 export const cartReducer = (state = initialCartState, action) => {
 	switch (action.type) {
 		case ACTION_TYPE.ADD_TO_CART:
@@ -31,18 +30,15 @@ export const cartReducer = (state = initialCartState, action) => {
 		case ACTION_TYPE.CLEAR_CART:
 			return {
 				...state,
-				productsInCart: [], // Обнуление корзины
+				productsInCart: [],
 			};
 		case ACTION_TYPE.REMOVE_FROM_CART:
 			const updatedCart = state.productsInCart.reduce((newCatr, item) => {
 				if (item.id === action.payload.id) {
-					// Если count больше 1, уменьшаем на 1
 					if (item.count > 1) {
 						newCatr.push({ ...item, count: item.count - 1 });
 					}
-					// Если count равен 1, товар удаляется, поэтому здесь ничего не делаем
 				} else {
-					// Все остальные товары просто переходят в новый список
 					newCatr.push(item);
 				}
 				return newCatr;

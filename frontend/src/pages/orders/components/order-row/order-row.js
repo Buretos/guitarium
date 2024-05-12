@@ -23,26 +23,23 @@ const OrderRowContainer = ({
 	updateOrders,
 }) => {
 	const navigate = useNavigate();
-	const [initialStatusId, setInitialStatusId] = useState(statusId); // изначальный статус заказа, отображаемый в поле выбора статусов (см. тег select)
-	const [selectedStatusId, setSelectedStatusId] = useState(statusId); // Новый статус  из списка (перед выбором она соответствует текущей роли)
+	const [initialStatusId, setInitialStatusId] = useState(statusId);
+	const [selectedStatusId, setSelectedStatusId] = useState(statusId);
 
 	const onStatusChange = ({ target }) => {
-		// обработчик изменения статуса выбранной из  выпадающего списка
-		setSelectedStatusId(Number(target.value)); // изменение id  статуса на выбранное значение поля, value={roleId}
+		setSelectedStatusId(Number(target.value));
 	};
 
 	const onStatusSave = (orderId, newOrderStatusId) => {
-		// обработчик сохранения выбранного статуса
 		request(`/orders/${orderId}`, 'PATCH', { statusId: newOrderStatusId }).then(
 			() => {
-				// запрос на сервер и обновление id статуса в методе orders
 				setInitialStatusId(newOrderStatusId);
 				updateOrders();
 			},
 		);
 	};
 
-	const isSaveButtonDisabled = selectedStatusId === initialStatusId; // флаг выключения активности кнопки сохранить при совпадении выбранного  статуса с изначальным, т.е.  когда статус не изменился.
+	const isSaveButtonDisabled = selectedStatusId === initialStatusId;
 
 	const onOrderInfo = () => {
 		navigate('/order', {
@@ -76,15 +73,11 @@ const OrderRowContainer = ({
 				) : (
 					<div className="status-column">
 						<select value={selectedStatusId} onChange={onStatusChange}>
-							{status.map(
-								(
-									{ id: statusId, name: statusName }, // вывод выпадающего списка ролей (массивом map) по названию roleName контекст тега option, который соответствует полю name, и значению, соответствующему полю id массива roles, т.е. roleId
-								) => (
-									<option key={statusId} value={statusId}>
-										{statusName}
-									</option>
-								),
-							)}
+							{status.map(({ id: statusId, name: statusName }) => (
+								<option key={statusId} value={statusId}>
+									{statusName}
+								</option>
+							))}
 						</select>
 						<div className="save-role-button">
 							<Icon
@@ -119,7 +112,6 @@ export const OrderRow = styled(OrderRowContainer)`
 `;
 
 OrderRowContainer.propTypes = {
-	className: PropTypes.string, // Обычно не является обязательным, потому что может быть предоставлено styled-компонентом
 	id: PropTypes.string.isRequired,
 	userLogin: PropTypes.string.isRequired,
 	productsInCart: PropTypes.arrayOf(

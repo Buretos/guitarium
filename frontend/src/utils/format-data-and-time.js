@@ -10,7 +10,3 @@ export function formatDateAndTime(dateString) {
 	const date = new Date(dateString);
 	return date.toLocaleString('ru-RU', options);
 }
-
-//   const originalDate = "2023-04-20T14:45:00Z";
-//   const formattedDateAndTime = formatDateAndTime(originalDate);
-//   console.log(formattedDateAndTime); // Вывод: "20.04.2023, 17:45" (зависит от временной зоны)

@@ -7,13 +7,13 @@ import { checkAccess } from '../../../../utils';
 import { ROLE, PROP_TYPE } from '../../../../constants';
 import { selectCategories, selectUserRole } from '../../../../selectors';
 import styled from 'styled-components';
-import { ratingProduct } from './utils/rating-product';
 
 const SpecialPannelContainer = ({
 	className,
 	id,
 	categoryId,
-	comments,
+	commentsCount,
+	commentsRating,
 	quanthy,
 	price,
 	editButton,
@@ -40,7 +40,7 @@ const SpecialPannelContainer = ({
 	};
 	const isAdmin = checkAccess([ROLE.ADMIN], userRole);
 	const isSalesman = checkAccess([ROLE.SALESMAN], userRole);
-	const SpecificSpecialPanel = editButton.props.id; // переключатель спецификации специальной панели (удаление или редактирование)
+	const SpecificSpecialPanel = editButton.props.id;
 
 	return SpecificSpecialPanel === 'fa-floppy-o' ? (
 		<div className={className}>
@@ -66,7 +66,7 @@ const SpecialPannelContainer = ({
 					margin="0 7px"
 					size="18px"
 				/>
-				{ratingProduct(comments)}
+				{commentsRating}
 			</div>
 			<div className="product-info">
 				<Icon
@@ -76,7 +76,7 @@ const SpecialPannelContainer = ({
 					margin="0 7px"
 					size="18px"
 				/>
-				{comments.length}
+				{commentsCount}
 			</div>
 			<div className="product-info">
 				<Icon

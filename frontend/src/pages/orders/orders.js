@@ -64,10 +64,8 @@ const OrdersContainer = ({ className }) => {
 	const reversedOrders = [...orders].reverse();
 
 	useEffect(() => {
-		// Фильтрация и сортировка заказов
 		let updatedOrders = [...reversedOrders];
 
-		// Фильтрация по id, имени пользователя или дате
 		if (searchTerm) {
 			updatedOrders = updatedOrders.filter(
 				(order) =>
@@ -78,7 +76,6 @@ const OrdersContainer = ({ className }) => {
 			);
 		}
 
-		// Фильтрация по статусу
 		if (selectedStatus !== 'all') {
 			updatedOrders = updatedOrders.filter(
 				(order) => order.statusId.toString() === selectedStatus,

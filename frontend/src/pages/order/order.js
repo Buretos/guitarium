@@ -11,7 +11,6 @@ const OrderContainer = ({ className }) => {
 	const { state } = useLocation();
 	const categories = useSelector(selectCategories);
 
-	// Проверка, есть ли состояние передано
 	if (!state) {
 		return <div>Заказ не найден</div>; // Рендерим что-то, если заказа нет
 	}
@@ -55,7 +54,7 @@ const OrderContainer = ({ className }) => {
 			</div>
 			{productsInCart.map(
 				({
-					_id,
+					id,
 					title,
 					imageUrl,
 					categoryId,
@@ -69,11 +68,11 @@ const OrderContainer = ({ className }) => {
 				}) => {
 					const categoryName = Object.values(categories)[categoryId].name;
 					return (
-						<div className="product-bloc" key={_id}>
+						<div className="product-bloc" key={id}>
 							<div className="product-card">
 								<ProductCard
-									key={_id}
-									id={_id}
+									key={id}
+									id={id}
 									title={title}
 									imageUrl={imageUrl}
 									categoryId={categoryId}
@@ -84,6 +83,7 @@ const OrderContainer = ({ className }) => {
 									commentsRating={commentsRating}
 									cardOnly={true}
 								/>
+								{/* <img src={imageUrl} alt={title} /> */}
 							</div>
 							<div className="product-info">
 								<div>
@@ -99,7 +99,13 @@ const OrderContainer = ({ className }) => {
 									Модель: <b>{model}</b>
 								</div>
 								<div>
-									Количество: <b>{count}</b> шт.
+									Приобретённое оличество: <b>{count}</b>
+								</div>
+								<div>
+									Число отзывов: <b>{commentsCount}</b>
+								</div>
+								<div>
+									Рейтинг: <b>{commentsRating}</b>
 								</div>
 								<div>
 									Цена: <b>{price}</b> руб./шт.

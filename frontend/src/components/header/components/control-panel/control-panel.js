@@ -99,7 +99,7 @@ const ControlPanelContainer = ({ className }) => {
 
 				{isSalesman && (
 					<>
-						<Link to="/product">
+						<Link to="/products">
 							<Icon
 								title="добавление нового товара"
 								id="fa fa-plus"
@@ -123,7 +123,7 @@ const ControlPanelContainer = ({ className }) => {
 
 				{isAdmin && (
 					<>
-						<Link to="/product">
+						<Link to="/products">
 							<Icon
 								title="добавление нового товара"
 								id="fa fa-plus"

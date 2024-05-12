@@ -11,13 +11,12 @@ import styled from 'styled-components';
 const ProductContainer = ({ className }) => {
 	const [error, setError] = useState(null);
 	const dispatch = useDispatch();
-	const params = useParams(); //  извлечения параметров из текущего URL
-	const [isLoading, setIsLoading] = useState(false); // Чтобы реагироапть на загрузуу
-	const isCreating = useMatch('/product'); // Возвращает данные соответствия о маршруте по заданному пути относительно текущего местоположения.
-	const isEditing = useMatch('/product/:id/edit');
+	const params = useParams();
+	const [isLoading, setIsLoading] = useState(false);
+	const isCreating = useMatch('/products');
+	const isEditing = useMatch('/products/:id/edit');
 	const product = useSelector(selectProduct);
 
-	// Данные продукта сбрасываем при каждом монтировании компонента Product (чтобы синхронизировать с данными сервера). Для этого используем синхронный аналог useEffect, т.е. useLayoutEffect, который срабатывает  при его (поста) монтировании, а потом данные будут подгружаться уже через useEffect
 	useLayoutEffect(() => {
 		setIsLoading(true);
 		dispatch(RESET_PRODUCT_DATA);

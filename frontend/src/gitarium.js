@@ -68,9 +68,9 @@ export const Gitarium = () => {
 					<Route path="/orders" element={<Orders />} />
 					<Route path="/order" element={<Order />} />
 					<Route path="/loader" element={<Loader />} />
-					<Route path="/product/:id" element={<Product />} />
-					<Route path="/product" element={<Product />} />
-					<Route path="/product/:id/edit" element={<Product />} />
+					<Route path="/products/:id" element={<Product />} />
+					<Route path="/products" element={<Product />} />
+					<Route path="/products/:id/edit" element={<Product />} />
 					<Route path="/*" element={<Error error={ERROR.PEGE_NOT_EXIST} />} />
 				</Routes>
 			</Page>

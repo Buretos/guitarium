@@ -1,4 +1,3 @@
-// import PropTypes from 'prop-types';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMatch, useNavigate } from 'react-router-dom';
@@ -24,18 +23,18 @@ const ProductFormContainer = ({
 		content,
 	},
 }) => {
-	const [imageUrlValue, setImageUrlValue] = useState(imageUrl); // записываем в стейт переданную пропсом imageUrl
-	const [titleValue, setTitleValue] = useState(title); // записываем в стейт переданную пропсом title
-	const [selectedCategoryId, setSelectedCategoryId] = useState(categoryId); // записываем в стейт переданную пропсом title
-	const [manufacturerValue, setManufacturerValue] = useState(''); // записываем в стейт переданную пропсом title
-	const [modelValue, setModelValue] = useState(''); // записываем в стейт переданную пропсом title
-	const [quanthyValue, setQuanthyValue] = useState(0); // записываем в стейт переданную пропсом title
-	const [priceValue, setPriceValue] = useState(0); // записываем в стейт переданную пропсом title
+	const [imageUrlValue, setImageUrlValue] = useState(imageUrl);
+	const [titleValue, setTitleValue] = useState(title);
+	const [selectedCategoryId, setSelectedCategoryId] = useState(categoryId);
+	const [manufacturerValue, setManufacturerValue] = useState('');
+	const [modelValue, setModelValue] = useState('');
+	const [quanthyValue, setQuanthyValue] = useState(0);
+	const [priceValue, setPriceValue] = useState(0);
 	const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
 	const contentRef = useRef(null);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const isCreating = useMatch('/product');
+	const isCreating = useMatch('/products');
 	const [titleProductForm, setTitleProductForm] = useState(
 		'Редактирование информации о товаре',
 	);
@@ -86,7 +85,7 @@ const ProductFormContainer = ({
 				price: priceValue,
 				content: newContent,
 			}),
-		).then(({ id }) => navigate(`/product/${id}`));
+		).then(({ id }) => navigate(`/products/${id}`));
 	}, [
 		dispatch,
 		navigate,
@@ -148,9 +147,7 @@ const ProductFormContainer = ({
 					<span>Категоря товара:&nbsp;</span>
 					<select value={selectedCategoryId} onChange={onCategoryChange}>
 						{Object.values(categories).map(
-							(
-								{ id: categoryId, name: categoryName }, // вывод выпадающего списка категорий (массивом map) по названию roleName контекст тега option, который соответствует полю name, и значению, соответствующему полю id массива roles, т.е. roleId
-							) => (
+							({ id: categoryId, name: categoryName }) => (
 								<option key={categoryId} value={categoryId}>
 									{categoryName}
 								</option>

@@ -82,11 +82,9 @@ const CartContainer = ({ className }) => {
 		messageCreatedOrder();
 	};
 
-	// Проверяем, все ли условия для активации кнопки "Оформить заказ" выполнены
 	const canCheckout = countAll > 0 && deliveryMethod && paymentMethod;
 
 	const isClient = checkAccess([ROLE.CLIENT], roleId);
-
 	return (
 		<div className={className}>
 			<div className="order">

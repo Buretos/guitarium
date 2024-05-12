@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { addToCart } from '../../../../actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUserRole } from '../../../../selectors';
+import { ratingProduct } from '../../../../utils';
 
 const ProductContentContainer = ({
 	className,
@@ -21,6 +22,8 @@ const ProductContentContainer = ({
 		price,
 		content,
 		comments,
+		commentsCount = comments.length,
+		commentsRating = ratingProduct(comments),
 	},
 }) => {
 	const dispatch = useDispatch();
@@ -38,6 +41,8 @@ const ProductContentContainer = ({
 		price,
 		content,
 		comments,
+		commentsCount,
+		commentsRating,
 	};
 	const handleAddToCart = (product) => {
 		dispatch(addToCart(product));
@@ -50,16 +55,17 @@ const ProductContentContainer = ({
 			<SpecialPannel
 				id={id}
 				categoryId={categoryId}
-				comments={comments}
 				quanthy={quanthy}
 				price={price}
+				commentsCount={commentsCount}
+				commentsRating={commentsRating}
 				margin="-20px 0 12px"
 				editButton={
 					<Icon
 						title="редактирование товара"
 						id="fa-pencil-square-o"
 						size="22px"
-						onClick={() => navigate(`/product/${id}/edit`)}
+						onClick={() => navigate(`/products/${id}/edit`)}
 					/>
 				}
 			/>
